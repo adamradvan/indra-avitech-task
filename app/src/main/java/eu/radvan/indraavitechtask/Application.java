@@ -24,7 +24,6 @@ public class Application {
         printAll();
         deleteAll();
         printAll();
-
     }
 
     private void add(long id, String guid, String name) {

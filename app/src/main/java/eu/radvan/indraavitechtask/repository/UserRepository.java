@@ -5,12 +5,10 @@ import eu.radvan.indraavitechtask.model.dto.CreateUserDto;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.EntityTransaction;
-import lombok.extern.slf4j.Slf4j;
 
 import java.util.List;
 import java.util.function.Function;
 
-@Slf4j
 public class UserRepository {
 
     private final EntityManagerFactory entityManagerFactory;
