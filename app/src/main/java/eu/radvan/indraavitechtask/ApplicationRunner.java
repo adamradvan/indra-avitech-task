@@ -1,41 +1,48 @@
 package eu.radvan.indraavitechtask;
 
-import eu.radvan.indraavitechtask.model.ProgrammingLanguage;
+import eu.radvan.indraavitechtask.model.User;
+import eu.radvan.indraavitechtask.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 
 import java.util.Arrays;
 import java.util.List;
 
+@Slf4j
 public class ApplicationRunner {
 
-	private static final JPAService jpaService = JPAService.getInstance();
+    private static final UserRepository USER_REPOSITORY = UserRepository.getInstance();
 
-	public static void main(String[] args) {
-		try {
-			createProgrammingLanguages();
-			printTopProgrammingLanguages();
-		} finally {
-			jpaService.shutdown();
-		}
-	}
+    public static void main(String[] args) {
+        try {
+            add(1, "a1", "Robert");
+            add(2, "a2", "Martin");
 
-	private static void createProgrammingLanguages() {
-		jpaService.runInTransaction(entityManager -> {
-			Arrays.stream("Java,C++,C#,JavaScript,Rust,Go,Python,PHP".split(","))
-					.map(name -> new ProgrammingLanguage(name, (int) (Math.random() * 10)))
-					.forEach(entityManager::persist);
-			return null;
-		});
-	}
+            printAll();
+            deleteAll();
+            printAll();
 
-	private static void printTopProgrammingLanguages() {
-		List<ProgrammingLanguage> programmingLanguages = jpaService.runInTransaction(entityManager ->
-				entityManager.createQuery(
-						"select p from ProgrammingLanguage p where p.rating > 5",
-						ProgrammingLanguage.class
-				).getResultList());
+        } finally {
+            USER_REPOSITORY.release();
+        }
+    }
 
-		programmingLanguages.stream()
-				.map(pl -> pl.getName() + ": " + pl.getRating())
-				.forEach(System.out::println);
-	}
+    private static void add(long id, String guid, String Robert) {
+        User user = USER_REPOSITORY.create(id, guid, Robert);
+
+        log.info("Added: " + user);
+    }
+
+    private static void printAll() {
+        List<User> all = USER_REPOSITORY.findAll();
+
+        log.info("Find all: " + Arrays.toString(all.toArray()));
+    }
+
+    private static void deleteAll() {
+        Integer deletedCount = USER_REPOSITORY.deleteAll();
+
+        log.info("Deleted count: " + deletedCount);
+    }
+
+
 }
