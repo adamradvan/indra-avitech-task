@@ -20,7 +20,7 @@ public class CommandConsumer implements Runnable {
         try {
             while (true) {
                 log.info("Polling the queue...");
-                Command command = queue.poll(2, TimeUnit.SECONDS); // wait for 0.5 seconds
+                Command command = queue.poll(500, TimeUnit.MILLISECONDS); // wait for 0.5 second before giving up
 
                 if (command == null) {
                     log.info("Queue is empty");

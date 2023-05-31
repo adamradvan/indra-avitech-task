@@ -9,7 +9,6 @@ import lombok.experimental.FieldNameConstants;
 
 import java.util.Objects;
 
-// - User is defined as database table `SUSERS` with columns `(USER_ID, USER_GUID, USER_NAME)`
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

@@ -31,13 +31,11 @@ public class ApplicationRunner {
             consumerThread.start();
 
             try {
-                // Wait for both threads to finish
                 log.info("Waiting for both threads to finish...");
                 producerThread.join();
                 consumerThread.join();
                 log.info("Both threads have finished.");
             } catch (InterruptedException e) {
-                // Log and handle interruption
                 log.error("Threads were interrupted: " + e);
                 Thread.currentThread().interrupt();
             }
