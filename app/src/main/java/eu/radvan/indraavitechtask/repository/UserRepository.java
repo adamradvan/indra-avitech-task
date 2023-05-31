@@ -34,10 +34,7 @@ public class UserRepository {
 
     public List<User> findAll() {
         return runInTransaction(em -> em
-                .createQuery(
-                        "select u from User u",
-                        User.class
-                )
+                .createQuery("select u from User u", User.class)
                 .getResultList());
     }
 
