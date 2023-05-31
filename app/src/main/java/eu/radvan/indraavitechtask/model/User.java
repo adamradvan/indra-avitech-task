@@ -19,10 +19,10 @@ import java.util.Objects;
 public class User {
 
     @NotNull
+    @Setter(AccessLevel.PRIVATE)
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "USER_ID", updatable = false, nullable = false)
-    @Setter(AccessLevel.PRIVATE)
+    @Column(name = "USER_ID", unique = true, updatable = false, nullable = false)
     private Long id;
 
     @NotBlank
